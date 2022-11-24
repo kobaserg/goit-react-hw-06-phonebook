@@ -77,7 +77,7 @@ export function Contacts(props) {
           </FormContact>
         </div>
       </PhoneBook>
-      <h2>Contacts</h2>
+      <h2>Contacts now</h2>
     </div>
   );
 }
