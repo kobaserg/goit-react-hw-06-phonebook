@@ -1,43 +1,36 @@
-import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Contacts } from '../Contacts/Contacts';
 import { ContactsList } from '../ContactsList/ContactsList';
 import { Filter } from '../Filter/Filter';
 import { View } from './App.styled';
+import { addContact, isFilter, removeContact } from 'redux/phonebookSlice';
 
 export function App() {
-  const [contacts, setContacts] = useState(() => {
-    return JSON.parse(localStorage.getItem('contacts')) ?? [];
-  });
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
+  const dispatch = useDispatch();
   const formHandlerSubmit = submitData => {
-    const contactIs = contacts
-      .map(cont => cont.name.includes(submitData.name))
-      .includes(true);
-    !contactIs
-      ? setContacts([submitData, ...contacts])
-      : alert(`${submitData.name} is already in contacns`);
+    dispatch(addContact(submitData));
   };
 
+  const contactsGallery = useSelector(state => state.book.contacts);
+  const filter = useSelector(state => state.book.filter);
+
   const onSearchContact = filterName => {
-    setFilter(filterName);
+    dispatch(isFilter(filterName));
   };
 
   const onDeleteContact = id => {
-    const updateContacts = contacts.filter(cont => cont.id !== id);
-    setContacts(updateContacts);
+    dispatch(removeContact(id));
   };
+
   let renderList = [];
-  const normolizedFilter = filter.toLowerCase();
-  const filterContacts = contacts.filter(cont =>
+  const normolizedFilter = filter.toLowerCase().trim();
+  const filterContacts = contactsGallery.filter(cont =>
     cont.name.toLowerCase().includes(normolizedFilter)
   );
 
-  filter.length === 0 ? (renderList = contacts) : (renderList = filterContacts);
+  filter.length === 0
+    ? (renderList = contactsGallery)
+    : (renderList = filterContacts);
 
   return (
     <View>
