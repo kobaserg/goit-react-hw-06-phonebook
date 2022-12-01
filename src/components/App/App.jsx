@@ -3,7 +3,13 @@ import { Contacts } from '../Contacts/Contacts';
 import { ContactsList } from '../ContactsList/ContactsList';
 import { Filter } from '../Filter/Filter';
 import { View } from './App.styled';
-import { addContact, isFilter, removeContact } from 'redux/phonebookSlice';
+import {
+  addContact,
+  isFilter,
+  removeContact,
+  getStoreContacts,
+  getStoreFilter,
+} from 'redux/phonebookSlice';
 
 export function App() {
   const dispatch = useDispatch();
@@ -11,8 +17,8 @@ export function App() {
     dispatch(addContact(submitData));
   };
 
-  const contactsGallery = useSelector(state => state.book.contacts);
-  const filter = useSelector(state => state.book.filter);
+  const contactsGallery = useSelector(getStoreContacts);
+  const filter = useSelector(getStoreFilter);
 
   const onSearchContact = filterName => {
     dispatch(isFilter(filterName));
