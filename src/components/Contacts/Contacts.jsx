@@ -32,13 +32,9 @@ export function Contacts(props) {
     setId(nanoid());
   };
 
-  const formHandlerSubmit = submitData => {
-    dispatch(addContact(submitData));
-  };
-
   const handleSubmit = event => {
     event.preventDefault();
-    formHandlerSubmit({ id, name, number });
+    dispatch(addContact({ id, name, number }));
     resetForm();
   };
 
