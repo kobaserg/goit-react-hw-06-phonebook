@@ -11,7 +11,7 @@ import {
   BtnSubmit,
 } from './Contacts.styled';
 
-export function Contacts(props) {
+export function Contacts() {
   const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');

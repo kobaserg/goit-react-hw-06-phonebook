@@ -15,7 +15,7 @@ import {
   BtnDelete,
 } from './ContactsList.styled';
 
-export const ContactsList = props => {
+export const ContactsList = () => {
   const dispatch = useDispatch();
   const contactsGallery = useSelector(getStoreContacts);
   const filter = useSelector(getStoreFilter);
