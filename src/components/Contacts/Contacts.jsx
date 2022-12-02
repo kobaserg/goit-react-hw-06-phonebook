@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addContact } from 'redux/phonebookSlice';
 import {
   PhoneBook,
   Label,
@@ -13,7 +15,7 @@ export function Contacts(props) {
   const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-
+  const dispatch = useDispatch();
   const handleChange = event => {
     const nameEvent = event.target.name;
 
@@ -30,9 +32,13 @@ export function Contacts(props) {
     setId(nanoid());
   };
 
+  const formHandlerSubmit = submitData => {
+    dispatch(addContact(submitData));
+  };
+
   const handleSubmit = event => {
     event.preventDefault();
-    props.addSubmitForm({ id, name, number });
+    formHandlerSubmit({ id, name, number });
     resetForm();
   };
 

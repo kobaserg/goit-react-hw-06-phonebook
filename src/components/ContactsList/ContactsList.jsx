@@ -1,5 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  removeContact,
+  getStoreContacts,
+  getStoreFilter,
+} from 'redux/phonebookSlice';
+
 import {
   ListContact,
   ItemContact,
@@ -9,13 +16,27 @@ import {
 } from './ContactsList.styled';
 
 export const ContactsList = props => {
+  const dispatch = useDispatch();
+  const contactsGallery = useSelector(getStoreContacts);
+  const filter = useSelector(getStoreFilter);
+
   function handleDelete(id) {
-    props.contDelete(id);
+    dispatch(removeContact(id));
   }
+
+  let renderList = [];
+  const normolizedFilter = filter.toLowerCase().trim();
+  const filterContacts = contactsGallery.filter(cont =>
+    cont.name.toLowerCase().includes(normolizedFilter)
+  );
+
+  filter.length === 0
+    ? (renderList = contactsGallery)
+    : (renderList = filterContacts);
 
   return (
     <ListContact>
-      {props.contacts.map(cont => {
+      {renderList.map(cont => {
         return (
           <ItemContact key={cont.id}>
             <Contact>

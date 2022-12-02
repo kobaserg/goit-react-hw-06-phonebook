@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { isFilter } from 'redux/phonebookSlice';
 
-export class Filter extends React.Component {
-  handleFilter = event => {
-    this.props.filterList(event.target.value);
-  };
-
-  render() {
-    return (
-      <div>
-        <h3>Find contact by Name</h3>
-        <label>
-          <input type="text" onChange={this.handleFilter}></input>
-        </label>
-      </div>
-    );
+export function Filter() {
+  const dispatch = useDispatch();
+  function handleFilter(event) {
+    dispatch(isFilter(event.target.value));
   }
+
+  return (
+    <div>
+      <h3>Find contact by Name</h3>
+      <label>
+        <input type="text" onChange={handleFilter}></input>
+      </label>
+    </div>
+  );
 }
 
 Filter.propTypes = {
